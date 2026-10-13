@@ -1,0 +1,24 @@
+services:
+  web:
+    # Static site. Python's built-in static server is used instead of nginx
+    # because the bind-mounted repo root is not world-traversable, which makes
+    # nginx's unprivileged worker user return 403. It reads from the mount on
+    # every request, so edits to index.html are live with no rebuild.
+    image: python:3.12-slim
+    restart: on-failure
+    working_dir: /site
+    command: ["python", "-m", "http.server", "3000", "--bind", "0.0.0.0"]
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/site:ro
+    healthcheck:
+      test:
+        - "CMD"
+        - "python"
+        - "-c"
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:3000/').read()"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
