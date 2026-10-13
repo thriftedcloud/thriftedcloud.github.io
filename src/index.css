@@ -83,76 +83,7 @@ body {
   background-size: 24px 24px;
 }
 
-/* Subtle page shadow near the binding */
-.notebook::before {
-  content: '';
-  position: absolute;
-  left: 42px;
-  top: 0;
-  bottom: 0;
-  width: 18px;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.05), transparent);
-  z-index: 1;
-  pointer-events: none;
-}
 
-/* ---- Spiral Binding ---- */
-.notebook-binding {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 42px;
-  background: linear-gradient(to right, #D0D0D0, #E8E8E8 50%, #DADADA);
-  border-right: 1px solid #C0C0C0;
-  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.08);
-  z-index: 2;
-}
-
-/* Punched holes */
-.notebook-binding::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 20px;
-  width: 18px;
-  height: calc(100% - 40px);
-  transform: translateX(-50%);
-  background-image: radial-gradient(circle, var(--bg) 5px, #B0B0B0 6px, transparent 7.5px);
-  background-size: 100% 32px;
-  background-repeat: repeat-y;
-  background-position: 0 0;
-}
-
-/* Spiral wire segments through holes */
-.notebook-binding::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 20px;
-  width: 2px;
-  height: calc(100% - 40px);
-  transform: translateX(-50%);
-  background: repeating-linear-gradient(
-    to bottom,
-    #999 0,
-    #999 13px,
-    transparent 13px,
-    transparent 32px
-  );
-}
-
-/* ---- Margin Line ---- */
-.notebook-margin {
-  position: absolute;
-  left: 58px;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: var(--accent);
-  opacity: 0.3;
-  z-index: 1;
-}
 
 /* ---- Content Area ---- */
 .notebook-content {
@@ -161,9 +92,20 @@ body {
   right: 0;
   top: 0;
   bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+}
+
+/* ---- Draggable Elements ---- */
+.draggable {
+  user-select: none;
+  will-change: transform;
+}
+
+.draggable.is-dragging {
+  z-index: 100;
+}
+
+.draggable.is-dragging .photo-frame {
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
 }
 
 /* ---- Photo Placeholder ---- */
